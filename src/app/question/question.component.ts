@@ -19,6 +19,7 @@ export class QuestionComponent implements OnInit {
   interval$:any;
   progress:string="0";
   isQuizCompleted :boolean=false;
+  attempt:number=0;
 
   constructor(private questionService:QuestionService) { }
 
@@ -42,6 +43,7 @@ export class QuestionComponent implements OnInit {
   }
   answer(questionNo:number,option:any){
     if(option.correct){
+      this.attempt++;
       this.getProgressPercent();
       this.points += 10;
       this.correctAnswer++;
@@ -58,7 +60,8 @@ export class QuestionComponent implements OnInit {
         }
       }, 1000);
       
-    }else{
+    }else if(!option.correct){
+      this.attempt++;
       this.points -= 5
       this.incorrectAnswer++;
       this.getProgressPercent();
